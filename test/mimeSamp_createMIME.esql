@@ -1,0 +1,67 @@
+
+
+CREATE COMPUTE MODULE mimeSamp_createMIME
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		
+		DECLARE part1Data BLOB ASBITSTREAM(InputRoot.XMLNSC, InputProperties.Encoding, InputProperties.CodedCharSetId);
+
+
+		SET OutputRoot.Properties.ContentType = 'multipart/related; boundary=myBoundary';
+		
+		CREATE FIELD OutputRoot.MIME TYPE Name;
+		DECLARE M REFERENCE TO OutputRoot.MIME;
+		CREATE LASTCHILD OF M TYPE Name NAME 'Parts';
+		CREATE LASTCHILD OF M.Parts TYPE Name NAME 'Part'; 
+		DECLARE P1 REFERENCE TO M.Parts.Part[1];  
+		CREATE FIELD P1."Content-Type" TYPE NameValue VALUE 'text/plain';
+		CREATE FIELD P1."Content-Id"   TYPE NameValue VALUE 'part one'; 
+		CREATE LASTCHILD OF P1 TYPE Name NAME 'Data'; 
+		CREATE LASTCHILD OF P1.Data DOMAIN('BLOB') PARSE(part1Data);
+		
+		CREATE LASTCHILD OF M.Parts TYPE Name NAME 'Part';
+	 	DECLARE P2 REFERENCE TO M.Parts.Part[2];
+
+	  -- Second part:
+	  --   Create the attachment of an email.
+	  --   The attachment is called 'attachment.txt' and contains the text 'This is an attachment.'.
+	  	CREATE FIELD P2."Content-Type" TYPE NameValue VALUE 'text/plain; charset=us-ascii; name=attachment.txt';
+	  	CREATE FIELD P2."Content-Transfer-Encoding" TYPE NameValue VALUE '8bit';
+	  	CREATE LASTCHILD OF P2 TYPE Name NAME 'Data';
+	  	CREATE LASTCHILD OF P2.Data DOMAIN('BLOB') PARSE(CAST('This is an attachment.' AS BLOB CCSID 1208));
+		
+/*		CREATE LASTCHILD OF M.Parts TYPE Name NAME 'Part'; 
+		DECLARE P2 REFERENCE TO M.Parts.Part[2];  
+		CREATE FIELD P2."Content-Type" TYPE NameValue VALUE 'text/plain';
+		CREATE FIELD P2."Content-Id"   TYPE NameValue VALUE 'part two'; 
+		CREATE LASTCHILD OF P2 TYPE Name NAME 'Data'; 
+		CREATE LASTCHILD OF P2.Data DOMAIN('BLOB') PARSE(part1Data); 
+		
+		
+		CREATE LASTCHILD OF OutputRoot.MIME.Parts TYPE Name NAME 'Part'; 
+		DECLARE P3 REFERENCE TO OutputRoot.MIME.Parts.Part[2]; 
+		SET P3."Content-Type" = 'text/xml'; 
+		SET P3."Content-Disposition" = 'form-data'; 
+		--SET P3."Content-Disposition" ='application/x-www-form-urlencoded'; 
+		SET P3."name" = 'uploadMe'; 
+		SET P3."filename"='HelpMe.txt'; 
+		CREATE LASTCHILD OF P3 TYPE Name NAME 'Data'; 
+		CREATE LASTCHILD OF P3.Data DOMAIN('BLOB') PARSE(part2Data); */
+
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;
