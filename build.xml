@@ -6,7 +6,7 @@
 
     <property name="toolkit.home" value="C:\Program Files\IBM\IIB\10.0.0.20" />
 
-    <property name="workspaces.dir" value="C:\Users\firoj.badsa\IBM\IIBT10\workspace\NewApp_001" />
+    <property name="workspaces.dir" value="C:\Users\firoj.badsa\IBM\IIBT10\workspace" />
 
     <property name="runtime.dir" value="C:\Program Files\IBM\IIB\10.0.0.20\server\bin" />
 
