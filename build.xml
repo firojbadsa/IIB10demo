@@ -62,7 +62,7 @@
 	<property name="execution.group" value="default" />
 
     <echo message="Deploying Broker Archive file: ${bar.name} " />
-    <exec executable="${runtime.dir}\mqsiprofile.cmd" spawn="false">	  
+    <exec executable="${runtime.dir}\mqsiprofile.cmd" spawn="false">	</exec>  
 
     <exec executable="${runtime.dir}\mqsideploy.exe" spawn="false">
 
