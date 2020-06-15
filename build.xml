@@ -63,7 +63,7 @@
 
     <echo message="Deploying Broker Archive file: ${bar.name} " />
 
-    <exec executable="${runtime.dir}\mqsideployscript.bat" spawn="false">
+    <exec executable="${runtime.dir}\mqsideploy.exe" spawn="false">
 
       <arg value="${Brokername}" />
 
