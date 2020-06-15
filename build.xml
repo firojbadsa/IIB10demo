@@ -63,19 +63,25 @@
 
     <echo message="Deploying Broker Archive file: ${bar.name} " />
     
-    <exec executable="${runtime.dir}\mqsideployscript.bat" spawn="false">
+<!--    <exec executable="${runtime.dir}\mqsideployscript.bat" spawn="false">
 
       <arg value="${Brokername}" />
-
       <arg value="-e" />
-
       <arg value="${execution.group}" />
-
       <arg value="-a" />
-
       <arg value="${workspaces.dir}\${appln.name}\${appln.name}.bar" />
 
-    </exec>
+    </exec> -->
+	  
+    	<exec executable="${runtime.dir}/mqsiprofile.cmd" spawn="false" logerror="true" failonerror="false">
+		<arg value="&amp;"/>
+		<arg value="${runtime.dir}\mqsideploy.exe" />
+		<arg value="${Brokername}" />
+		<arg value="-e" />
+		<arg value="${execution.group}" />
+		<arg value="-a" />
+		<arg value="${workspaces.dir}\${appln.name}\${appln.name}.bar" />
+	</exec> 	  
 
     <echo message="Completed building Broker Archive file - ${bar.name} " />
 
