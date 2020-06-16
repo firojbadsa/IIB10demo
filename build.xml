@@ -92,6 +92,8 @@
 		<arg value="-u" />
 		<arg value="-e" />
 		<arg value="${execution.group}" />
+		<arg value="-k" />
+		<arg value="NewApp_001" />
 		<arg value="-f" />
 		<arg value="newflow_001" />
 		<arg value="-l" />
