@@ -84,8 +84,10 @@
 	</exec> 	  
 
     <echo message="Completed building Broker Archive file - ${bar.name} " />
-	  
-	 <exec executable="${runtime.dir}/mqsichangetrace.exe" spawn="false" logerror="true" failonerror="false">
+	 
+	<exec executable="${runtime.dir}/mqsiprofile.cmd" spawn="false" logerror="true" failonerror="false">
+		<arg value="&amp;"/>
+	 	<arg value="${runtime.dir}/mqsichangetrace.exe">
 		<arg value="${Brokername}"/>
 		<arg value="-u" />
 		<arg value="-e" />
