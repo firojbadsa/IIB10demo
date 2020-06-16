@@ -84,6 +84,19 @@
 	</exec> 	  
 
     <echo message="Completed building Broker Archive file - ${bar.name} " />
+	  
+	 <exec executable="${runtime.dir}/mqsichangetrace.exe" spawn="false" logerror="true" failonerror="false">
+		<arg value="${Brokername}"/>
+		<arg value="-u" />
+		<arg value="-e" />
+		<arg value="${execution.group}" />
+		<arg value="-f" />
+		<arg value="newflow_001" />
+		<arg value="-l" />
+		<arg value="debug" />
+	</exec> 
+	  
+	<echo message="User trace Enabled - ${bar.name} " />  
 
   </target>
 
