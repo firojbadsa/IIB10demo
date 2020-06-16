@@ -87,7 +87,7 @@
 	 
 	<exec executable="${runtime.dir}/mqsiprofile.cmd" spawn="false" logerror="true" failonerror="false">
 		<arg value="&amp;"/>
-	 	<arg value="${runtime.dir}/mqsichangetrace.exe">
+	 	<arg value="${runtime.dir}/mqsichangetrace.exe" />
 		<arg value="${Brokername}"/>
 		<arg value="-u" />
 		<arg value="-e" />
